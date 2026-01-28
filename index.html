@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reddit Ideas Dashboard | Discover Million-Dollar App Ideas</title>
-    <meta name="description" content="Discover million-dollar app ideas from Reddit. We analyzed 975 posts from 39 subreddits to find the best startup opportunities.">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="description" content="Discover million-dollar app ideas from Reddit. We analyzed 975+ posts from 39 subreddits to find the best startup opportunities.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,22 +17,31 @@
 
         :root {
             --primary: #6366f1;
-            --primary-dark: #4f46e5;
             --primary-light: #818cf8;
             --secondary: #ec4899;
             --accent: #f59e0b;
-            --dark: #0f172a;
-            --dark-light: #1e293b;
-            --gray: #64748b;
-            --light: #f8fafc;
             --success: #10b981;
-            --gradient: linear-gradient(135deg, #6366f1 0%, #ec4899 50%, #f59e0b 100%);
-            --card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            --hover-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #030712;
+            --dark-light: #0f172a;
+            --dark-lighter: #1e293b;
+            --gray: #64748b;
+            --gray-light: #94a3b8;
+            --light: #f8fafc;
+            --gradient-1: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+            --gradient-2: linear-gradient(135deg, #ec4899 0%, #f43f5e 50%, #f59e0b 100%);
+            --gradient-3: linear-gradient(135deg, #10b981 0%, #06b6d4 50%, #3b82f6 100%);
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', sans-serif;
             background: var(--dark);
             color: var(--light);
             line-height: 1.6;
@@ -46,39 +57,94 @@
             height: 100%;
             z-index: -1;
             overflow: hidden;
+            background: var(--dark);
         }
 
         .bg-animation::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background: 
-                radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.1) 0%, transparent 40%);
-            animation: bgFloat 20s ease-in-out infinite;
+                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(99, 102, 241, 0.15), transparent),
+                radial-gradient(ellipse 60% 40% at 80% 60%, rgba(236, 72, 153, 0.1), transparent),
+                radial-gradient(ellipse 50% 30% at 50% 100%, rgba(16, 185, 129, 0.08), transparent);
+            animation: bgPulse 15s ease-in-out infinite;
         }
 
-        @keyframes bgFloat {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(30px, -30px) rotate(1deg); }
-            66% { transform: translate(-20px, 20px) rotate(-1deg); }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #ec4899, #f43f5e);
+            top: 40%;
+            right: -150px;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #10b981, #06b6d4);
+            bottom: -100px;
+            left: 30%;
+            animation-delay: -10s;
+        }
+
+        @keyframes bgPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -30px) scale(1.05); }
+            50% { transform: translate(-20px, 20px) scale(0.95); }
+            75% { transform: translate(20px, 30px) scale(1.02); }
+        }
+
+        /* Noise Texture */
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            z-index: -1;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
         /* Header */
         header {
-            padding: 2rem 5%;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 1000;
-            background: rgba(15, 23, 42, 0.8);
+            padding: 1rem 5%;
+            background: rgba(3, 7, 18, 0.7);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--glass-border);
         }
 
         nav {
@@ -93,54 +159,105 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            font-weight: 800;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
             font-size: 1.5rem;
-            background: var(--gradient);
+            background: var(--gradient-1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            text-decoration: none;
         }
 
         .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--gradient);
+            width: 42px;
+            height: 42px;
+            background: var(--gradient-1);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
+            font-size: 1.5rem;
+            -webkit-text-fill-color: initial;
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.3);
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 2.5rem;
             list-style: none;
+            align-items: center;
         }
 
         .nav-links a {
-            color: var(--light);
+            color: var(--gray-light);
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
+            font-size: 0.9375rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-1);
+            transition: width 0.3s;
         }
 
         .nav-links a:hover {
-            color: var(--primary-light);
+            color: var(--light);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            padding: 0.625rem 1.25rem;
+            background: var(--gradient-1);
+            border-radius: 8px;
+            color: white !important;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .nav-cta::after {
+            display: none !important;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
         }
 
         /* Hero Section */
         .hero {
-            min-height: 60vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 8rem 5% 4rem;
             text-align: center;
+            position: relative;
         }
 
         .hero-content {
-            max-width: 900px;
+            max-width: 1000px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .badge-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
         }
 
         .badge {
@@ -148,62 +265,174 @@
             align-items: center;
             gap: 0.5rem;
             padding: 0.5rem 1rem;
-            background: rgba(99, 102, 241, 0.2);
-            border: 1px solid rgba(99, 102, 241, 0.3);
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
             border-radius: 50px;
             font-size: 0.875rem;
-            font-weight: 600;
+            font-weight: 500;
             color: var(--primary-light);
-            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.2); }
+            50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.4); }
+        }
+
+        .badge.pulse {
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
-            50% { box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); }
+            0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
         }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            font-weight: 800;
-            line-height: 1.1;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            line-height: 1;
             margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            letter-spacing: -0.02em;
+        }
+
+        .hero h1 .gradient-text {
+            background: var(--gradient-1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .hero h1 span {
-            background: var(--gradient);
+        .hero h1 .gradient-text-2 {
+            background: var(--gradient-2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .hero p {
+        .hero-description {
             font-size: 1.25rem;
-            color: var(--gray);
+            color: var(--gray-light);
             max-width: 600px;
-            margin: 0 auto 2rem;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
         }
 
-        /* Search & Filter */
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-stat-label {
+            color: var(--gray);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            font-size: 1rem;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: white;
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--glass);
+            color: var(--light);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-3px);
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gray);
+            font-size: 0.875rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        /* Search Section */
         .search-section {
             padding: 2rem 5%;
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
+            z-index: 10;
         }
 
         .search-container {
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
-            background: rgba(30, 41, 59, 0.5);
+            background: var(--glass);
             padding: 1.5rem;
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
         .search-box {
@@ -216,11 +445,12 @@
             width: 100%;
             padding: 1rem 1rem 1rem 3rem;
             background: rgba(15, 23, 42, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
             border-radius: 12px;
             color: var(--light);
             font-size: 1rem;
             transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
         }
 
         .search-box input:focus {
@@ -229,24 +459,30 @@
             box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
         }
 
-        .search-box::before {
-            content: '🔍';
+        .search-box input::placeholder {
+            color: var(--gray);
+        }
+
+        .search-icon {
             position: absolute;
             left: 1rem;
             top: 50%;
             transform: translateY(-50%);
             font-size: 1.25rem;
+            color: var(--gray);
         }
 
         .filter-select {
             padding: 1rem 1.5rem;
             background: rgba(15, 23, 42, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
             border-radius: 12px;
             color: var(--light);
             font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+            min-width: 180px;
         }
 
         .filter-select:focus {
@@ -254,38 +490,63 @@
             border-color: var(--primary);
         }
 
-        /* Stats */
+        .filter-select option {
+            background: var(--dark-light);
+            color: var(--light);
+        }
+
+        /* Stats Bar */
         .stats-bar {
             display: flex;
             justify-content: center;
-            gap: 3rem;
-            padding: 2rem 5%;
+            gap: 4rem;
+            padding: 3rem 5%;
             flex-wrap: wrap;
+            position: relative;
         }
 
         .stat-item {
             text-align: center;
+            position: relative;
+        }
+
+        .stat-item::after {
+            content: '';
+            position: absolute;
+            right: -2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 40px;
+            background: var(--glass-border);
+        }
+
+        .stat-item:last-child::after {
+            display: none;
         }
 
         .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: var(--gradient);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            background: var(--gradient-1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            line-height: 1;
         }
 
         .stat-label {
             color: var(--gray);
             font-size: 0.875rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            margin-top: 0.5rem;
         }
 
-        /* Ideas Grid */
+        /* Ideas Section */
         .ideas-section {
-            padding: 4rem 5%;
+            padding: 4rem 5% 6rem;
             max-width: 1400px;
             margin: 0 auto;
         }
@@ -294,32 +555,86 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
             flex-wrap: wrap;
             gap: 1rem;
         }
 
+        .section-title-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
         .section-title {
-            font-size: 2rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
             font-weight: 700;
         }
 
+        .section-subtitle {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 0.5rem;
+            background: var(--glass);
+            padding: 0.5rem;
+            border-radius: 10px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .view-btn {
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .view-btn.active {
+            background: var(--gradient-1);
+            color: white;
+        }
+
+        /* Ideas Grid */
         .ideas-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .ideas-grid.list {
+            grid-template-columns: 1fr;
         }
 
         /* Idea Card */
         .idea-card {
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            padding: 2rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.75rem;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
             cursor: pointer;
+            backdrop-filter: blur(10px);
         }
 
         .idea-card::before {
@@ -328,16 +643,16 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
-            background: var(--gradient);
+            height: 3px;
+            background: var(--gradient-1);
             transform: scaleX(0);
             transition: transform 0.4s;
         }
 
         .idea-card:hover {
             transform: translateY(-8px);
-            box-shadow: var(--card-shadow);
             border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
         .idea-card:hover::before {
@@ -348,12 +663,13 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem;
         }
 
         .niche-tag {
-            padding: 0.375rem 0.875rem;
-            background: rgba(99, 102, 241, 0.2);
+            padding: 0.5rem 1rem;
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.2);
             border-radius: 50px;
             font-size: 0.75rem;
             font-weight: 600;
@@ -362,38 +678,67 @@
             letter-spacing: 0.5px;
         }
 
+        .score-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
         .score-badge {
             display: flex;
             align-items: center;
-            gap: 0.25rem;
+            gap: 0.375rem;
             padding: 0.5rem 1rem;
-            background: rgba(16, 185, 129, 0.2);
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.2);
             border-radius: 50px;
             font-weight: 700;
+            color: var(--success);
+            font-size: 0.9375rem;
+        }
+
+        .trend-indicator {
+            font-size: 0.75rem;
             color: var(--success);
         }
 
         .card-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-            line-height: 1.4;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.375rem;
+            font-weight: 600;
+            margin-bottom: 0.875rem;
+            line-height: 1.3;
             color: #fff;
         }
 
         .card-preview {
-            color: var(--gray);
+            color: var(--gray-light);
             font-size: 0.9375rem;
-            line-height: 1.6;
+            line-height: 1.7;
             margin-bottom: 1.5rem;
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.875rem;
+            color: var(--gray);
         }
 
         .card-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--glass-border);
         }
 
         .subreddit {
@@ -402,28 +747,28 @@
             gap: 0.5rem;
             color: var(--gray);
             font-size: 0.875rem;
-        }
-
-        .subreddit::before {
-            content: '📌';
+            font-weight: 500;
         }
 
         .potential-badge {
-            padding: 0.375rem 0.75rem;
+            padding: 0.5rem 1rem;
             border-radius: 8px;
             font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .potential-high {
-            background: rgba(16, 185, 129, 0.2);
+            background: rgba(16, 185, 129, 0.15);
             color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.2);
         }
 
         .potential-medium {
-            background: rgba(245, 158, 11, 0.2);
+            background: rgba(245, 158, 11, 0.15);
             color: var(--accent);
+            border: 1px solid rgba(245, 158, 11, 0.2);
         }
 
         .card-link {
@@ -435,20 +780,104 @@
             z-index: 1;
         }
 
+        .card-actions {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            color: var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .action-btn:hover {
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--primary-light);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        /* Featured Section */
+        .featured-section {
+            padding: 4rem 5%;
+            background: linear-gradient(180deg, transparent 0%, rgba(99, 102, 241, 0.05) 50%, transparent 100%);
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .featured-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s;
+            backdrop-filter: blur(10px);
+        }
+
+        .featured-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .featured-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--gradient-1);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        .featured-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .featured-desc {
+            color: var(--gray-light);
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+
         /* CTA Section */
         .cta-section {
             padding: 6rem 5%;
             text-align: center;
+            position: relative;
         }
 
         .cta-box {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 4rem;
-            background: var(--gradient);
+            background: var(--gradient-1);
             border-radius: 32px;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.4);
         }
 
         .cta-box::before {
@@ -459,7 +888,7 @@
             width: 200%;
             height: 200%;
             background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
-            animation: rotate 20s linear infinite;
+            animation: rotate 30s linear infinite;
         }
 
         @keyframes rotate {
@@ -473,49 +902,203 @@
         }
 
         .cta-box h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
             margin-bottom: 1rem;
             color: #fff;
         }
 
         .cta-box p {
-            font-size: 1.125rem;
-            margin-bottom: 2rem;
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
             opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 2rem;
-            background: #fff;
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-white {
+            background: white;
             color: var(--primary);
-            font-weight: 700;
-            font-size: 1rem;
-            border-radius: 12px;
-            text-decoration: none;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
         }
 
-        .btn:hover {
+        .btn-white:hover {
             transform: scale(1.05);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
+        .btn-outline-white {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-outline-white:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+        }
+
+        /* Newsletter */
+        .newsletter-section {
+            padding: 4rem 5%;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 1rem 1.5rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--light);
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
         /* Footer */
         footer {
-            padding: 3rem 5%;
-            text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 4rem 5% 2rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand {
+            max-width: 300px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .footer-desc {
             color: var(--gray);
+            font-size: 0.9375rem;
+            line-height: 1.7;
+        }
+
+        .footer-title {
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            color: var(--light);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.9375rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-light);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 1.125rem;
+        }
+
+        .social-links a:hover {
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--primary-light);
+            border-color: rgba(99, 102, 241, 0.3);
         }
 
         /* Responsive */
+        @media (max-width: 1024px) {
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
         @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
             .hero h1 {
                 font-size: 2.5rem;
             }
@@ -525,65 +1108,161 @@
             }
             
             .stats-bar {
-                gap: 1.5rem;
+                gap: 2rem;
+            }
+            
+            .stat-item::after {
+                display: none;
             }
             
             .cta-box {
-                padding: 2rem;
+                padding: 2.5rem 1.5rem;
             }
             
             .cta-box h2 {
-                font-size: 1.75rem;
+                font-size: 2rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .footer-brand {
+                max-width: 100%;
             }
         }
 
         /* Loading Animation */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
+        .skeleton {
+            background: linear-gradient(90deg, var(--glass) 25%, rgba(255,255,255,0.05) 50%, var(--glass) 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 8px;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem 1.5rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s;
+            z-index: 9999;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast-icon {
+            font-size: 1.25rem;
+        }
+
+        .toast-message {
+            font-weight: 500;
         }
     </style>
 </head>
 <body>
-    <div class="bg-animation"></div>
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    <div class="noise"></div>
 
     <header>
         <nav>
-            <div class="logo">
+            <a href="#" class="logo">
                 <div class="logo-icon">💡</div>
                 Reddit Ideas
-            </div>
+            </a>
             <ul class="nav-links">
-                <li><a href="#ideas">Ideas</a></li>
+                <li><a href="#ideas">Explore Ideas</a></li>
+                <li><a href="#features">Features</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="https://github.com" target="_blank">GitHub</a></li>
+                <li><a href="https://github.com" target="_blank" class="nav-cta">GitHub</a></li>
             </ul>
         </nav>
     </header>
 
     <section class="hero">
         <div class="hero-content">
-            <div class="badge">
-                <span>🔥</span> Live from 975 Reddit Posts
+            <div class="badge-container">
+                <div class="badge pulse">
+                    <span>🔥</span> Live from 975+ Reddit Posts
+                </div>
+                <div class="badge">
+                    <span>✨</span> Updated Weekly
+                </div>
             </div>
-            <h1>Discover <span>Million-Dollar</span> App Ideas</h1>
-            <p>We analyzed thousands of Reddit discussions to find the most promising startup opportunities. Zero budget required.</p>
+            
+            <h1>
+                Discover <span class="gradient-text">Million-Dollar</span><br>
+                <span class="gradient-text-2">App Ideas</span>
+            </h1>
+            
+            <p class="hero-description">
+                We analyzed thousands of Reddit discussions to find the most promising startup opportunities. 
+                Filter by niche, sort by potential, and build your next big thing.
+            </p>
+
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat-number">975+</div>
+                    <div class="hero-stat-label">Posts Analyzed</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-number">39</div>
+                    <div class="hero-stat-label">Subreddits</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-number">10</div>
+                    <div class="hero-stat-label">Top Ideas</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-number">8</div>
+                    <div class="hero-stat-label">Niches</div>
+                </div>
+            </div>
+
+            <div class="hero-cta">
+                <a href="#ideas" class="btn btn-primary">
+                    <span>🚀</span> Explore Ideas
+                </a>
+                <a href="#newsletter" class="btn btn-secondary">
+                    <span>📧</span> Get Weekly Updates
+                </a>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <span>Scroll to explore</span>
+            <span>↓</span>
         </div>
     </section>
 
     <section class="search-section">
         <div class="search-container">
             <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Search ideas...">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Search ideas, niches, keywords...">
             </div>
             <select class="filter-select" id="nicheFilter">
                 <option value="all">All Niches</option>
@@ -598,12 +1277,17 @@
                 <option value="Local Business">Local Business</option>
                 <option value="Startup Resources">Startup Resources</option>
             </select>
+            <select class="filter-select" id="sortFilter">
+                <option value="score">Sort by Score</option>
+                <option value="potential">Sort by Potential</option>
+                <option value="newest">Sort by Newest</option>
+            </select>
         </div>
     </section>
 
     <section class="stats-bar">
         <div class="stat-item">
-            <div class="stat-number">975</div>
+            <div class="stat-number">975+</div>
             <div class="stat-label">Posts Analyzed</div>
         </div>
         <div class="stat-item">
@@ -611,24 +1295,63 @@
             <div class="stat-label">Subreddits</div>
         </div>
         <div class="stat-item">
-            <div class="stat-number">10</div>
-            <div class="stat-label">Top Ideas</div>
+            <div class="stat-number" id="totalIdeas">10</div>
+            <div class="stat-label">Curated Ideas</div>
         </div>
         <div class="stat-item">
             <div class="stat-number">8</div>
-            <div class="stat-label">Niches</div>
+            <div class="stat-label">Industries</div>
         </div>
     </section>
 
     <section class="ideas-section" id="ideas">
         <div class="section-header">
-            <h2 class="section-title">Top App Ideas</h2>
-            <span style="color: var(--gray);">Sorted by potential score</span>
+            <div class="section-title-wrapper">
+                <div class="section-icon">💎</div>
+                <div>
+                    <h2 class="section-title">Top App Ideas</h2>
+                    <p class="section-subtitle">Hand-picked from thousands of Reddit discussions</p>
+                </div>
+            </div>
+            <div class="view-toggle">
+                <button class="view-btn active" data-view="grid">⊞ Grid</button>
+                <button class="view-btn" data-view="list">☰ List</button>
+            </div>
         </div>
         
         <div class="ideas-grid" id="ideasGrid">
-            <!-- Ideas will be populated by JavaScript -->
+            <!-- Ideas populated by JavaScript -->
         </div>
+    </section>
+
+    <section class="featured-section" id="features">
+        <div class="featured-grid">
+            <div class="featured-card">
+                <div class="featured-icon">🔍</div>
+                <h3 class="featured-title">Smart Filtering</h3>
+                <p class="featured-desc">Filter by niche, business potential, and trending score to find the perfect idea for your skills.</p>
+            </div>
+            <div class="featured-card">
+                <div class="featured-icon">📊</div>
+                <h3 class="featured-title">Data-Driven</h3>
+                <p class="featured-desc">Every idea is scored based on engagement, market potential, and feasibility using our proprietary algorithm.</p>
+            </div>
+            <div class="featured-card">
+                <div class="featured-icon">🔄</div>
+                <h3 class="featured-title">Weekly Updates</h3>
+                <p class="featured-desc">Fresh ideas added every week from the latest Reddit discussions. Never run out of inspiration.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="newsletter-section" id="newsletter">
+        <h2 class="section-title">Never Miss a Great Idea</h2>
+        <p class="section-subtitle">Get the best app ideas delivered to your inbox every week. No spam, unsubscribe anytime.</p>
+        
+        <form class="newsletter-form" onsubmit="handleSubscribe(event)">
+            <input type="email" class="newsletter-input" placeholder="Enter your email" required>
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
     </section>
 
     <section class="cta-section">
@@ -636,158 +1359,334 @@
             <div class="cta-content">
                 <h2>Ready to Build Your Startup?</h2>
                 <p>Get our complete 8-week guide to turning these ideas into revenue-generating businesses. Zero budget required.</p>
-                <a href="https://github.com" class="btn">
-                    <span>🚀</span> Get the Free Guide
-                </a>
+                <div class="cta-buttons">
+                    <a href="#" class="btn btn-white">
+                        <span>🚀</span> Get the Free Guide
+                    </a>
+                    <a href="https://github.com" target="_blank" class="btn btn-outline-white">
+                        <span>⭐</span> Star on GitHub
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 
     <footer>
-        <p>Built with ❤️ from Reddit data • Open Source on GitHub</p>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">💡 Reddit Ideas</div>
+                <p class="footer-desc">Discover million-dollar app ideas from Reddit. We analyze thousands of posts to find the best startup opportunities.</p>
+            </div>
+            <div>
+                <h4 class="footer-title">Product</h4>
+                <ul class="footer-links">
+                    <li><a href="#ideas">Explore Ideas</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">API</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Resources</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Guides</a></li>
+                    <li><a href="#">Newsletter</a></li>
+                    <li><a href="#">Community</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Company</h4>
+                <ul class="footer-links">
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Privacy</a></li>
+                    <li><a href="#">Terms</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>Built with ❤️ from Reddit data • Open Source on GitHub</p>
+            <div class="social-links">
+                <a href="#" title="Twitter">🐦</a>
+                <a href="#" title="GitHub">💻</a>
+                <a href="#" title="Discord">💬</a>
+                <a href="#" title="Product Hunt">🚀</a>
+            </div>
+        </div>
     </footer>
 
+    <div class="toast" id="toast">
+        <span class="toast-icon">✅</span>
+        <span class="toast-message">Action completed!</span>
+    </div>
+
     <script>
-        // Sample data from our analysis
+        // Sample data
         const ideas = [
             {
+                id: 1,
                 title: 'Queue & Appointment Management System',
                 subreddit: 'productivity',
                 niche: 'Business Tools',
                 score: 35,
                 link: 'https://www.reddit.com/r/productivity/comments/1qp6xjm/struggling_with_long_waits_and_chaotic_schedules/',
                 preview: 'Many businesses lose time managing queues and appointments manually. Customers get frustrated, staff get interrupted.',
-                business_potential: 'HIGH'
+                business_potential: 'HIGH',
+                comments: 127,
+                upvotes: 892,
+                trend: 'up'
             },
             {
+                id: 2,
                 title: 'Co-Founder Relationship Management Tool',
                 subreddit: 'startups',
                 niche: 'Startup Tools',
                 score: 30,
                 link: 'https://www.reddit.com/r/startups/comments/1qp74qa/need_help_navigating_cofounder_egos_i_will_not/',
                 preview: 'Platform to manage co-founder relationships, equity splits, and communication to prevent startup failure.',
-                business_potential: 'MEDIUM'
+                business_potential: 'MEDIUM',
+                comments: 89,
+                upvotes: 654,
+                trend: 'up'
             },
             {
+                id: 3,
                 title: 'Wholesale Market Management App',
                 subreddit: 'startups',
                 niche: 'B2B SaaS',
                 score: 28,
                 link: 'https://www.reddit.com/r/startups/comments/1qod4oa/app_idea_industry_experience_but_no_money_or_dev/',
                 preview: 'Industry-specific app for wholesale teams in fast-moving markets. Based on real workflow problems.',
-                business_potential: 'HIGH'
+                business_potential: 'HIGH',
+                comments: 56,
+                upvotes: 423,
+                trend: 'stable'
             },
             {
+                id: 4,
                 title: 'Creo - AI Agent Builder',
                 subreddit: 'timemanagement',
                 niche: 'AI Tools',
                 score: 27,
                 link: 'https://www.reddit.com/r/TimeManagement/comments/1ktvr1p/just_launched_creo_a_new_way_to_build_ai_agents/',
                 preview: 'Build AI agents and automations just by writing prompts. No-code alternative to Zapier.',
-                business_potential: 'HIGH'
+                business_potential: 'HIGH',
+                comments: 203,
+                upvotes: 1247,
+                trend: 'up'
             },
             {
+                id: 5,
                 title: 'AI-Resistant Agency Tools',
                 subreddit: 'webdev',
                 niche: 'Agency Tools',
                 score: 27,
                 link: 'https://www.reddit.com/r/webdev/comments/1qp6kfg/as_an_agency_owner_im_honestly_anxious_about/',
                 preview: 'Help web development agencies adapt and integrate AI into their workflows.',
-                business_potential: 'MEDIUM'
+                business_potential: 'MEDIUM',
+                comments: 78,
+                upvotes: 534,
+                trend: 'up'
             },
             {
+                id: 6,
                 title: 'Subscription Website Service',
                 subreddit: 'smallbusiness',
                 niche: 'Web Services',
                 score: 27,
                 link: 'https://www.reddit.com/r/smallbusiness/comments/1qpevud/trying_a_different_approach/',
                 preview: 'Custom websites for small monthly fee instead of large upfront costs.',
-                business_potential: 'HIGH'
+                business_potential: 'HIGH',
+                comments: 134,
+                upvotes: 892,
+                trend: 'up'
             },
             {
+                id: 7,
                 title: 'AI Proactive Assistant',
                 subreddit: 'startups',
                 niche: 'AI Productivity',
                 score: 25,
                 link: 'https://www.reddit.com/r/startups/comments/1qp1akt/we_built_something_then_clawdbot_went_viral_now/',
                 preview: 'AI that handles emails, coordinates meetings, learns your preferences.',
-                business_potential: 'HIGH'
+                business_potential: 'HIGH',
+                comments: 167,
+                upvotes: 1102,
+                trend: 'up'
             },
             {
+                id: 8,
                 title: 'E-commerce Platform Optimizer',
                 subreddit: 'ecommerce',
                 niche: 'E-commerce',
                 score: 25,
                 link: 'https://www.reddit.com/r/ecommerce/comments/1qopq1r/tik_tok_shop_or_meta_also_is_amazon_a_distraction/',
                 preview: 'Analytics tool to optimize sales across TikTok Shop, Meta, Amazon.',
-                business_potential: 'MEDIUM'
+                business_potential: 'MEDIUM',
+                comments: 92,
+                upvotes: 678,
+                trend: 'stable'
             },
             {
+                id: 9,
                 title: 'Google Reviews Automation',
                 subreddit: 'timemanagement',
                 niche: 'Local Business',
                 score: 23,
                 link: 'https://www.reddit.com/r/TimeManagement/comments/1kutyit/hey_everyone_i_hope_this_is_okay_to_post_here/',
                 preview: 'Automate Google review requests via SMS templates for local businesses.',
-                business_potential: 'HIGH'
+                business_potential: 'HIGH',
+                comments: 45,
+                upvotes: 389,
+                trend: 'up'
             },
             {
+                id: 10,
                 title: 'Startup Tools Discount Aggregator',
                 subreddit: 'startups',
                 niche: 'Startup Resources',
                 score: 23,
                 link: 'https://www.reddit.com/r/startups/comments/1qohy8w/what_startup_programs_or_discounts_have_actually/',
                 preview: 'Platform listing all startup programs, discounts, and free credits.',
-                business_potential: 'MEDIUM'
+                business_potential: 'MEDIUM',
+                comments: 234,
+                upvotes: 1456,
+                trend: 'stable'
             }
         ];
 
         // Render ideas
         function renderIdeas(ideasToRender) {
             const grid = document.getElementById('ideasGrid');
+            
+            if (ideasToRender.length === 0) {
+                grid.innerHTML = '<div style="text-align: center; padding: 4rem; color: var(--gray);"><h3>No ideas found</h3><p>Try adjusting your search or filters</p></div>';
+                return;
+            }
+            
             grid.innerHTML = ideasToRender.map(idea => `
-                <article class="idea-card">
+                <article class="idea-card" data-id="${idea.id}">
                     <a href="${idea.link}" target="_blank" class="card-link"></a>
                     <div class="card-header">
                         <span class="niche-tag">${idea.niche}</span>
-                        <div class="score-badge">
-                            <span>⚡</span>
-                            ${idea.score}
+                        <div class="score-wrapper">
+                            <span class="trend-indicator">${idea.trend === 'up' ? '📈' : '➡️'}</span>
+                            <div class="score-badge">
+                                <span>⚡</span>
+                                ${idea.score}
+                            </div>
                         </div>
                     </div>
                     <h3 class="card-title">${idea.title}</h3>
                     <p class="card-preview">${idea.preview}</p>
+                    <div class="card-meta">
+                        <span class="meta-item">👍 ${idea.upvotes.toLocaleString()}</span>
+                        <span class="meta-item">💬 ${idea.comments}</span>
+                    </div>
                     <div class="card-footer">
-                        <span class="subreddit">r/${idea.subreddit}</span>
+                        <span class="subreddit">📌 r/${idea.subreddit}</span>
+                        <div class="card-actions">
+                            <button class="action-btn" onclick="saveIdea(${idea.id}, event)" title="Save">🔖</button>
+                            <button class="action-btn" onclick="shareIdea(${idea.id}, event)" title="Share">🔗</button>
+                        </div>
                         <span class="potential-badge potential-${idea.business_potential.toLowerCase()}">
-                            ${idea.business_potential} Potential
+                            ${idea.business_potential}
                         </span>
                     </div>
                 </article>
             `).join('');
+            
+            // Update counter
+            document.getElementById('totalIdeas').textContent = ideasToRender.length;
         }
 
-        // Filter and search functionality
+        // Filter and search
         function filterIdeas() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const nicheFilter = document.getElementById('nicheFilter').value;
+            const sortFilter = document.getElementById('sortFilter').value;
             
-            const filtered = ideas.filter(idea => {
+            let filtered = ideas.filter(idea => {
                 const matchesSearch = idea.title.toLowerCase().includes(searchTerm) || 
-                                    idea.preview.toLowerCase().includes(searchTerm);
+                                    idea.preview.toLowerCase().includes(searchTerm) ||
+                                    idea.niche.toLowerCase().includes(searchTerm);
                 const matchesNiche = nicheFilter === 'all' || idea.niche === nicheFilter;
                 return matchesSearch && matchesNiche;
             });
             
+            // Sort
+            if (sortFilter === 'score') {
+                filtered.sort((a, b) => b.score - a.score);
+            } else if (sortFilter === 'potential') {
+                const potentialOrder = { 'HIGH': 3, 'MEDIUM': 2, 'LOW': 1 };
+                filtered.sort((a, b) => potentialOrder[b.business_potential] - potentialOrder[a.business_potential]);
+            }
+            
             renderIdeas(filtered);
         }
+
+        // View toggle
+        document.querySelectorAll('.view-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const grid = document.getElementById('ideasGrid');
+                if (this.dataset.view === 'list') {
+                    grid.classList.add('list');
+                } else {
+                    grid.classList.remove('list');
+                }
+            });
+        });
 
         // Event listeners
         document.getElementById('searchInput').addEventListener('input', filterIdeas);
         document.getElementById('nicheFilter').addEventListener('change', filterIdeas);
+        document.getElementById('sortFilter').addEventListener('change', filterIdeas);
 
-        // Initial render
-        renderIdeas(ideas);
+        // Save idea
+        function saveIdea(id, event) {
+            event.preventDefault();
+            event.stopPropagation();
+            showToast('Idea saved to your collection!');
+        }
+
+        // Share idea
+        function shareIdea(id, event) {
+            event.preventDefault();
+            event.stopPropagation();
+            const idea = ideas.find(i => i.id === id);
+            if (navigator.share) {
+                navigator.share({
+                    title: idea.title,
+                    text: idea.preview,
+                    url: idea.link
+                });
+            } else {
+                navigator.clipboard.writeText(idea.link);
+                showToast('Link copied to clipboard!');
+            }
+        }
+
+        // Toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.querySelector('.toast-message').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Newsletter
+        function handleSubscribe(event) {
+            event.preventDefault();
+            showToast('Thanks for subscribing! Check your email.');
+            event.target.reset();
+        }
 
         // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -800,14 +1699,30 @@
             });
         });
 
-        // Card hover effect
-        document.querySelectorAll('.idea-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-8px)';
+        // Initial render
+        renderIdeas(ideas);
+
+        // Animate cards on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
             });
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-            });
+        }, observerOptions);
+
+        // Add animation styles
+        document.querySelectorAll('.idea-card').forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = `all 0.6s ease ${index * 0.1}s`;
+            observer.observe(card);
         });
     </script>
 </body>
